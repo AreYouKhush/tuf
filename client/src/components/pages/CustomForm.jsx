@@ -17,7 +17,7 @@ const CustomForm = () => {
   };
 
   const onSubmit = async (values) => {
-    const response = await axios.post('http://localhost:3000/user/form', values)
+    const response = await axios.post('https://tuf-production-d7c1.up.railway.app/user/form', values)
     console.log({response})
   };
 
