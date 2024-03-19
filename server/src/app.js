@@ -11,7 +11,7 @@ const userRouter = require("./api/routes/user");
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://tuf-roan.vercel.app/"
+    "https://tuf-roan.vercel.app"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 
 app.use(
   cors({
-    origin: ["https://tuf-roan.vercel.app/"],
+    origin: ["https://tuf-roan.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     credentials: true,
   })
