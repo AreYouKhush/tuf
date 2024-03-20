@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import url from "../../helpers/url";
 import ClockLoader from "react-spinners/ClockLoader";
+import ExpandIcon from "../../assets/expand.png";
 
 const Data = () => {
   const [dataset, setDataSet] = useState([]);
-  let [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+
   const tableHeaders = {
     id: "ID",
     username: "Username",
@@ -14,15 +16,35 @@ const Data = () => {
     stdin: "Stdin",
     createdAt: "Submitted On",
   };
+
   const getData = async () => {
     const { data } = await axios.get(url + "user/data");
     let dataArr = data.response;
     dataArr = dataArr.map((d) => ({
       ...d,
       createdAt: d.createdAt.substring(0, 10),
+      rows: d.source.split("\n").length < 10 ? d.source.split("\n").length : 7,
+      expaded: false,
     }));
     setDataSet([...dataArr]);
     setLoading(false);
+  };
+
+  const expand = (id) => {
+    const newData = dataset.map((d) => {
+      return {
+        ...d,
+        rows: !d.expaded
+          ? d.id === id
+            ? d.source.split("\n").length
+            : d.rows
+          : d.source.split("\n").length < 10
+          ? d.source.split("\n").length
+          : 7,
+        expaded: d.id === id ? !d.expaded : d.expaded,
+      };
+    });
+    setDataSet([...newData]);
   };
 
   useEffect(() => {
@@ -30,7 +52,7 @@ const Data = () => {
   }, []);
   return (
     <>
-      <div className="bg-gray-200 w-11/12 p-5 min-h-dvh">
+      <div className="bg-gray-200 w-11/12 p-5 min-h-dvh relative">
         <div
           className="grid border-[1px] border-solid border-black p-1 rounded-lg gap-1 bg-gray-600 md:overflow-hidden overflow-x-scroll"
           style={{ gridTemplateColumns: `40px 1fr 0.5fr 1fr 3fr 0.6fr` }}
@@ -71,18 +93,22 @@ const Data = () => {
                 <div className="lg:text-base text-sm bg-gray-200 rounded-lg p-2">
                   {d.stdin}
                 </div>
-                <div className="flex">
+                <div className="flex relative group">
                   <textarea
                     disabled
                     readOnly
                     className="resize-none overflow-hidden bg-gray-300 rounded-lg p-2 hover:shadow-lg cursor-pointer hover:opacity-85 duration-150 w-full"
                     value={d.source}
-                    rows={
-                      d.source.split("\n").length < 10
-                        ? d.source.split("\n").length
-                        : 7
-                    }
+                    rows={d.rows}
                   ></textarea>
+                  <div
+                    onClick={() => {
+                      expand(d.id);
+                    }}
+                    className="absolute h-5 right-2 top-2 hidden group-hover:flex opacity-75 cursor-pointer hover:bg-orange-600 rounded-lg"
+                  >
+                    <img src={ExpandIcon} className="h-5" alt="" />
+                  </div>
                 </div>
                 <div className="lg:text-base text-sm bg-gray-200 rounded-lg p-2 text-center">
                   {d.createdAt}
