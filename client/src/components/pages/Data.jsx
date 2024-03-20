@@ -22,11 +22,11 @@ const Data = () => {
       createdAt: d.createdAt.substring(0, 10),
     }));
     setDataSet([...dataArr]);
+    setLoading(false);
   };
 
   useEffect(() => {
     getData();
-    setLoading(false);
   }, []);
   return (
     <>
@@ -94,7 +94,7 @@ const Data = () => {
         </div>
         <div className="flex justify-center p-6">
           <ClockLoader
-            color={'#000'}
+            color={"#000"}
             loading={loading}
             size={150}
             aria-label="Loading Spinner"
