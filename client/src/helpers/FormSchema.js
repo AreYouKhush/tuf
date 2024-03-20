@@ -1,7 +1,8 @@
 import * as yup from "yup";
 
 export const FormSchema = yup.object().shape({
-    name: yup.string().required().min(3).max(40),
-    username: yup.string().required("Required"),
-    source: yup.string().required()
+    username: yup.string().required().min(3).max(40).required("*Username is Required"),
+    language: yup.string().required("*Please select a language"),
+    stdin: yup.string(),
+    source: yup.string().required("*Souce Code to required")
 })

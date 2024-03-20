@@ -17,4 +17,9 @@ router.post('/form', async(req, res) =>{
     res.json(newData);
 })
 
+router.get('/data', async(req, res) => {
+    const response = await User.findAll();
+    res.send({response})
+})
+
 module.exports = router;

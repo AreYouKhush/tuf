@@ -14,8 +14,8 @@ const CustomInput = ({ label, ...props }) => {
           {...props}
           className={
             meta.touched && meta.error
-              ? "border-2 border-red-600 px-5 py-2 rounded-lg focus:bg-slate-300 "
-              : "px-5 py-2 rounded-lg border-2 border-slate-500 focus:bg-slate-300 "
+              ? "border-2 border-red-600 w-64 px-5 py-2 rounded-lg bg-gray-200"
+              : "px-5 py-2 rounded-lg border-2 w-64 border-slate-500 bg-gray-200"
           }
         />
         {meta.error && meta.touched && (
