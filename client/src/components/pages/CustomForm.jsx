@@ -30,49 +30,58 @@ const CustomForm = () => {
         onSubmit={onSubmit}
       >
         {({ isSubmitting }) => (
-          <Form className="flex flex-col gap-4 font-semibold items-center">
-            <CustomInput
-              label="Username"
-              name="username"
-              type="text"
-              placeholder="Username"
-            />
-            <CustomDropdown label="Select Preferred Language" name="language">
-              <option value="">Select Language</option>
-              <option value="C++">C++</option>
-              <option value="Java">Java</option>
-              <option value="Python">Python</option>
-              <option value="JavaScript">JavaScript</option>
-            </CustomDropdown>
-            <div className="flex justify-center items-center flex-col w-11/12">
-              <CustomTextArea
-                className="flex-1 w-11/12 min-h-96 border-solid border-2 border-black rounded-lg"
-                label="Souce Code"
-                name="source"
+          <Form className="flex flex-col sm:flex-row gap-4 font-semibold">
+            <div className="flex flex-col gap-4 sm:w-1/5">
+              <CustomInput
+                label="Username"
+                name="username"
                 type="text"
-                placeholder="Write your code here"
-              ></CustomTextArea>
+                placeholder="Username"
+              />
+              <CustomDropdown label="Language" name="language">
+                <option value="">Select Language</option>
+                <option value="C++">C++</option>
+                <option value="Java">Java</option>
+                <option value="Python">Python</option>
+                <option value="JavaScript">JavaScript</option>
+              </CustomDropdown>
+              <div className="flex flex-col">
+                <CustomTextArea
+                  className="flex-1 sm:min-h-80 border-solid border-2 border-black rounded-lg"
+                  label="Standard Input"
+                  name="stdin"
+                  type="text"
+                  placeholder="Write stdin here"
+                ></CustomTextArea>
+              </div>
             </div>
-            <div className="flex justify-center items-center flex-col w-11/12">
-              <CustomTextArea
-                className="flex-1 w-11/12 min-h-52 border-solid border-2 border-black rounded-lg"
-                label="Standard Input"
-                name="stdin"
-                type="text"
-                placeholder="Write stdin here"
-              ></CustomTextArea>
+            <div className="flex sm:w-4/5 flex-col items-end gap-4">
+              <div className="flex flex-col w-full">
+                <CustomTextArea
+                  className="flex-1 min-h-[30.45rem] border-solid border-2 border-black rounded-lg"
+                  label="Souce Code"
+                  name="source"
+                  type="text"
+                  placeholder="Write your code here"
+                ></CustomTextArea>
+              </div>
+              <div className="flex gap-4">
+                <button className="rounded-lg text-white bg-orange-700 px-10 py-3 hover:opacity-85">
+                  Run
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={
+                    isSubmitting
+                      ? "rounded-lg text-white bg-orange-700 px-10 py-3 opacity-35"
+                      : "rounded-lg text-white bg-orange-700 px-10 py-3 hover:opacity-85"
+                  }
+                >
+                  Submit
+                </button>
+              </div>
             </div>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={
-                isSubmitting
-                  ? "rounded-lg text-white bg-orange-700 px-10 py-3 opacity-35"
-                  : "rounded-lg text-white bg-orange-700 px-10 py-3 hover:opacity-85"
-              }
-            >
-              Submit
-            </button>
           </Form>
         )}
       </Formik>
