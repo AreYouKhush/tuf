@@ -14,10 +14,10 @@ const CustomTextArea = ({ label, ...props }) => {
     <>
         <label htmlFor={props.id || props.name}>{label}</label>
         <Editor
-          // value={code}
-          // onValueChange={(e) => {
-          //   setCode(code);
-          // }}
+          value={code}
+          onValueChange={(e) => {
+            setCode(code);
+          }}
           highlight={(code) => highlight(code, languages.js)}
           padding={10}
           textareaId="codeArea"
