@@ -20,7 +20,6 @@ const CustomForm = () => {
 
   const onSubmit = async (values) => {
     const response = await axios.post(url + "user/form", values);
-    console.log({ response });
   };
 
   return (

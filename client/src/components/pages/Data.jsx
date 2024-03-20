@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import url from "../../helpers/url";
+import ClockLoader from "react-spinners/ClockLoader";
 
 const Data = () => {
   const [dataset, setDataSet] = useState([]);
+  let [loading, setLoading] = useState(true);
   const tableHeaders = {
     id: "ID",
     username: "Username",
@@ -20,11 +22,11 @@ const Data = () => {
       createdAt: d.createdAt.substring(0, 10),
     }));
     setDataSet([...dataArr]);
-    console.log(dataArr);
   };
 
   useEffect(() => {
     getData();
+    setLoading(false);
   }, []);
   return (
     <>
@@ -55,7 +57,7 @@ const Data = () => {
           {/* </div> */}
           {dataset.map((d, key) => {
             return (
-              <>
+              <React.Fragment key={key}>
                 {/* <div key="key" className="grid grid-cols-6 border-solid border-[1px] border-t-black p-2 gap-2 lg:text-base text-sm"> */}
                 <div className="lg:text-base text-sm bg-gray-200 rounded-lg p-2 text-center font-semibold">
                   {d.id}
@@ -75,16 +77,29 @@ const Data = () => {
                     readOnly
                     className="resize-none overflow-hidden bg-gray-300 rounded-lg p-2 hover:shadow-lg cursor-pointer hover:opacity-85 duration-150 w-full"
                     value={d.source}
-                    rows={(d.source.split('\n').length < 10 ? d.source.split('\n').length : 7)}
+                    rows={
+                      d.source.split("\n").length < 10
+                        ? d.source.split("\n").length
+                        : 7
+                    }
                   ></textarea>
                 </div>
                 <div className="lg:text-base text-sm bg-gray-200 rounded-lg p-2 text-center">
                   {d.createdAt}
                 </div>
                 {/* </div> */}
-              </>
+              </React.Fragment>
             );
           })}
+        </div>
+        <div className="flex justify-center p-6">
+          <ClockLoader
+            color={'#000'}
+            loading={loading}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
         </div>
       </div>
     </>
