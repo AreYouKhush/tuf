@@ -7,6 +7,8 @@ import ExpandIcon from "../../assets/expand.png";
 const Data = () => {
   const [dataset, setDataSet] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [paginate, setPaginate] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const tableHeaders = {
     id: "ID",
@@ -27,8 +29,44 @@ const Data = () => {
       rows: d.source.split("\n").length < 10 ? d.source.split("\n").length : 7,
       expaded: false,
     }));
-    setDataSet([...dataArr]);
+    let paginatedArr = [];
+    let fragment = [];
+    let count = 1;
+    let len = 0;
+
+    dataArr.forEach((d) => {
+      if (len < 10) {
+        fragment.push(d);
+        len++;
+      } else {
+        paginatedArr.push({ id: count, fragment: fragment });
+        fragment = [];
+        len = 0;
+        count++;
+      }
+    });
+
+    if (len < 10) {
+      paginatedArr.push({ id: count, fragment: fragment });
+    }
+
+    setDataSet([...paginatedArr[0].fragment]);
+    setPaginate([...paginatedArr]);
     setLoading(false);
+  };
+
+  const nextPage = () => {
+    if (currentPage != paginate.length - 1) {
+      setCurrentPage((prev) => prev + 1);
+      setDataSet([...paginate[currentPage + 1].fragment]);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage != 0) {
+      setCurrentPage((prev) => prev - 1);
+      setDataSet([...paginate[currentPage - 1].fragment]);
+    }
   };
 
   const expand = (id) => {
@@ -53,7 +91,7 @@ const Data = () => {
   }, []);
   return (
     <>
-      <div className="bg-gray-200 w-11/12 p-5 min-h-dvh relative">
+      <div className="bg-gray-200 w-11/12 p-2 md:p-5 min-h-dvh relative">
         <div
           className="grid border-[1px] border-solid border-black p-1 rounded-lg gap-1 bg-gray-600 md:overflow-hidden overflow-x-scroll"
           style={{ gridTemplateColumns: `40px 1fr 0.5fr 1fr 3fr 1fr 0.6fr` }}
@@ -125,7 +163,7 @@ const Data = () => {
             );
           })}
         </div>
-        <div className="flex justify-center p-6">
+        <div className={loading ? "flex justify-center p-6" : ""}>
           <ScaleLoader
             color={"#000"}
             loading={loading}
@@ -133,6 +171,24 @@ const Data = () => {
             aria-label="Loading Spinner"
             data-testid="loader"
           />
+        </div>
+        <div className="flex gap-2 justify-center items-center p-3 font-amaranth">
+          <div onClick={prevPage} className="bg-orange-700 px-2 py-1 font-semibold text-white rounded-lg cursor-pointer">Prev</div>
+          {paginate.map((p, key) => {
+            return (
+              <div
+                key={key}
+                onClick={() => {
+                  setCurrentPage(p.id - 1);
+                  setDataSet([...paginate[p.id - 1].fragment]);
+                }}
+                className={currentPage + 1 === p.id ? "bg-gray-500 px-2 py-1 text-white rounded-lg cursor-pointer" : "cursor-pointer"}
+              >
+                {p.id}
+              </div>
+            );
+          })}
+          <div onClick={nextPage} className="bg-orange-700 px-2 py-1 font-semibold text-white rounded-lg cursor-pointer">Next</div>
         </div>
       </div>
     </>
