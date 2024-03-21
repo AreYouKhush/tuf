@@ -23,8 +23,10 @@ const Data = () => {
   const getData = async () => {
     const { data } = await axios.get(url + "user/data");
     let dataArr = data.response;
+    let snum = 0;
     dataArr = dataArr.map((d) => ({
       ...d,
+      snum: ++snum,
       createdAt: d.createdAt.substring(0, 10),
       rows: d.source.split("\n").length < 10 ? d.source.split("\n").length : 7,
       expaded: false,
@@ -124,7 +126,7 @@ const Data = () => {
               <React.Fragment key={key}>
                 {/* <div key="key" className="grid grid-cols-6 border-solid border-[1px] border-t-black p-2 gap-2 lg:text-base text-sm"> */}
                 <div className="lg:text-base text-sm bg-gray-200 rounded-lg p-2 text-center font-semibold">
-                  {d.id}
+                  {d.snum}
                 </div>
                 <div className="lg:text-base text-sm bg-gray-200 rounded-lg p-2">
                   {d.username}
@@ -173,7 +175,12 @@ const Data = () => {
           />
         </div>
         <div className="flex gap-2 justify-center items-center p-3 font-amaranth">
-          <div onClick={prevPage} className="bg-orange-700 px-2 py-1 font-semibold text-white rounded-lg cursor-pointer">Prev</div>
+          <div
+            onClick={prevPage}
+            className="bg-orange-700 px-2 py-1 font-semibold text-white rounded-lg cursor-pointer"
+          >
+            Prev
+          </div>
           {paginate.map((p, key) => {
             return (
               <div
@@ -182,13 +189,22 @@ const Data = () => {
                   setCurrentPage(p.id - 1);
                   setDataSet([...paginate[p.id - 1].fragment]);
                 }}
-                className={currentPage + 1 === p.id ? "bg-gray-500 px-2 py-1 text-white rounded-lg cursor-pointer" : "cursor-pointer"}
+                className={
+                  currentPage + 1 === p.id
+                    ? "bg-gray-500 px-2 py-1 text-white rounded-lg cursor-pointer"
+                    : "cursor-pointer"
+                }
               >
                 {p.id}
               </div>
             );
           })}
-          <div onClick={nextPage} className="bg-orange-700 px-2 py-1 font-semibold text-white rounded-lg cursor-pointer">Next</div>
+          <div
+            onClick={nextPage}
+            className="bg-orange-700 px-2 py-1 font-semibold text-white rounded-lg cursor-pointer"
+          >
+            Next
+          </div>
         </div>
       </div>
     </>
