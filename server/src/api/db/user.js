@@ -14,6 +14,9 @@ const User = sequelize.define('User', {
   stdin: {
     type: DataTypes.STRING,
   },
+  stdout: {
+    type: DataTypes.STRING,
+  },
   source: {
     type: DataTypes.TEXT,
     allowNull: false

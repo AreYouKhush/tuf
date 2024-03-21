@@ -1,25 +1,27 @@
-const { Router } = require('express');
-const User = require('../db/user');
-const router = Router()
+const { Router } = require("express");
+const User = require("../db/user");
+const router = Router();
 
-router.post('/form', async(req, res) =>{
-    const username = req.body.username;
-    const language = req.body.language;
-    const stdin = req.body.stdin;
-    const source = req.body.source;
-    const newData = User.build({
-        username: username,
-        language: language,
-        stdin: stdin,
-        source: source
-    })
-    await newData.save();
-    res.json(newData);
-})
+router.post("/form", async (req, res) => {
+  const username = req.body.username;
+  const language = req.body.language;
+  const stdin = req.body.stdin;
+  const source = req.body.source;
+  const stdout = req.body.stdout;
+  const newData = User.build({
+    username: username,
+    language: language,
+    stdin: stdin,
+    source: source,
+    stdout: stdout,
+  });
+  await newData.save();
+  res.json(newData);
+});
 
-router.get('/data', async(req, res) => {
-    const response = await User.findAll();
-    res.send({response})
-})
+router.get("/data", async (req, res) => {
+  const response = await User.findAll();
+  res.send({ response });
+});
 
 module.exports = router;

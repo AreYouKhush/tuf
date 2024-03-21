@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import url from "../../helpers/url";
-import ClockLoader from "react-spinners/ClockLoader";
+import ScaleLoader from "react-spinners/ScaleLoader";
 import ExpandIcon from "../../assets/expand.png";
 
 const Data = () => {
@@ -14,6 +14,7 @@ const Data = () => {
     language: "Language",
     source: "Source Code",
     stdin: "Stdin",
+    stdout: "Stdout",
     createdAt: "Submitted On",
   };
 
@@ -55,7 +56,7 @@ const Data = () => {
       <div className="bg-gray-200 w-11/12 p-5 min-h-dvh relative">
         <div
           className="grid border-[1px] border-solid border-black p-1 rounded-lg gap-1 bg-gray-600 md:overflow-hidden overflow-x-scroll"
-          style={{ gridTemplateColumns: `40px 1fr 0.5fr 1fr 3fr 0.6fr` }}
+          style={{ gridTemplateColumns: `40px 1fr 0.5fr 1fr 3fr 1fr 0.6fr` }}
         >
           {/* <div key="key" className="grid grid-cols-6  font-amaranth font-bold lg:text-lg text-base gap-2 place-items-center"> */}
           <div className="font-amaranth font-bold lg:text-lg text-base text-center bg-gray-300 py-1 rounded-lg px-2">
@@ -72,6 +73,9 @@ const Data = () => {
           </div>
           <div className="font-amaranth font-bold lg:text-lg text-base text-center min-w-52 bg-gray-300 py-1 rounded-lg px-2">
             {tableHeaders.source}
+          </div>
+          <div className="font-amaranth font-bold lg:text-lg text-base text-center bg-gray-300 py-1 rounded-lg px-2">
+            {tableHeaders.stdout}
           </div>
           <div className="font-amaranth font-bold lg:text-lg text-base text-center bg-gray-300 py-1 rounded-lg px-2">
             {tableHeaders.createdAt}
@@ -110,6 +114,9 @@ const Data = () => {
                     <img src={ExpandIcon} className="h-5" alt="" />
                   </div>
                 </div>
+                <div className="lg:text-base text-sm bg-gray-200 rounded-lg p-2">
+                  {d.stdout}
+                </div>
                 <div className="lg:text-base text-sm bg-gray-200 rounded-lg p-2 text-center">
                   {d.createdAt}
                 </div>
@@ -119,10 +126,10 @@ const Data = () => {
           })}
         </div>
         <div className="flex justify-center p-6">
-          <ClockLoader
+          <ScaleLoader
             color={"#000"}
             loading={loading}
-            size={150}
+            height={40}
             aria-label="Loading Spinner"
             data-testid="loader"
           />
