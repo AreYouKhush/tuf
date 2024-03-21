@@ -27,7 +27,7 @@ const CustomTextArea = ({ label, ...props }) => {
           {...props}
           style={{
             fontFamily: '"Fira code", "Fira Mono", monospace',
-            fontSize: 18,
+            fontSize: 16,
             outline: 0,
           }}
         />
