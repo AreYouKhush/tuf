@@ -49,7 +49,7 @@ const Data = () => {
       }
     });
 
-    if (len < 10) {
+    if (len <= 10) {
       paginatedArr.push({ id: count, fragment: fragment });
     }
 

@@ -83,8 +83,10 @@ const CustomForm = () => {
         setTimeout(() => {
           checkStatus(token);
         }, 2000);
-      } else {
+      } else if(response.data.status.id == 3) {
         setOutput(atob(response.data.stdout));
+      }else{
+        setOutput(atob(response.data.stderr));
       }
     } catch (error) {
       console.error(error);
