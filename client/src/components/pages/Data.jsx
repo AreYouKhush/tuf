@@ -43,7 +43,8 @@ const Data = () => {
       } else {
         paginatedArr.push({ id: count, fragment: fragment });
         fragment = [];
-        len = 0;
+        fragment.push(d);
+        len = 1;
         count++;
       }
     });
