@@ -24,6 +24,7 @@ const Data = () => {
     const { data } = await axios.get(url + "user/data");
     let dataArr = data.response;
     let snum = 0;
+    dataArr.reverse();
     dataArr = dataArr.map((d) => ({
       ...d,
       snum: ++snum,

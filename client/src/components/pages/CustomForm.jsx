@@ -77,13 +77,16 @@ const CustomForm = () => {
 
     try {
       const response = await axios.request(options);
-      console.log(response.data);
       if (response.data.status.id == 1 || response.data.status.id == 2) {
         setTimeout(() => {
           checkStatus(token);
         }, 2000);
       } else if (response.data.status.id == 3) {
-        setOutput(atob(response.data.stdout));
+        if (response.data.stdout === null) {
+          setOutput("null");
+        } else {
+          setOutput(atob(response.data.stdout));
+        }
       } else {
         setOutput(response.data.status.description);
       }
