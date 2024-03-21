@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { FormSchema } from "../../helpers/FormSchema";
-import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CustomInput from "../ui/CustomInput";
 import CustomTextArea from "../ui/CustomTextArea";
@@ -14,7 +13,6 @@ const apiKey = import.meta.env.VITE_X_RapidAPI_Key;
 const apiHost = import.meta.env.VITE_X_RapidAPI_Host;
 
 const CustomForm = () => {
-  const navigate = useNavigate();
   const [output, setOutput] = useState("");
   const [run, setRun] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -79,14 +77,15 @@ const CustomForm = () => {
 
     try {
       const response = await axios.request(options);
+      console.log(response.data);
       if (response.data.status.id == 1 || response.data.status.id == 2) {
         setTimeout(() => {
           checkStatus(token);
         }, 2000);
-      } else if(response.data.status.id == 3) {
+      } else if (response.data.status.id == 3) {
         setOutput(atob(response.data.stdout));
-      }else{
-        setOutput(atob(response.data.stderr));
+      } else {
+        setOutput(response.data.status.description);
       }
     } catch (error) {
       console.error(error);

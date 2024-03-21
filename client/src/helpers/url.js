@@ -1,6 +1,6 @@
 let url;
 
-if (true) {
+if (import.meta.env.VITE_PRODUCTION) {
   url = "https://tuf-production-d7c1.up.railway.app/";
 } else {
   url = "http://localhost:3000/";
