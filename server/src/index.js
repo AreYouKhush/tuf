@@ -37,6 +37,7 @@ if (process.env.PRODUCTION) {
   );
 }
 
+app.use(express.static());
 app.use(express.json());
 sequelize.sync();
 
