@@ -1,11 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const sequelize = require("./src/api/db/server");
+const sequelize = require("./api/db/server");
 const app = express();
-const PORT = process.env.PORT;
-require('dotenv').config();
+require("dotenv").config();
 
-const userRouter = require("./src/api/routes/user");
+const userRouter = require("./api/routes/user");
 
 if (process.env.PRODUCTION) {
   app.use(cors());
@@ -51,9 +50,5 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/user", userRouter);
-
-app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}`);
-})
 
 module.exports = app;
